@@ -532,34 +532,34 @@
         </div>
     </section>
 
-    <form class="quote-form" id="quoteForm" action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSes5k78YDOcUx9_kkxI_FuM34IVkixfPHPvZ9GZ1DRI9Jc0nQ/formResponse" method="POST" target="_blank">
+    <form class="quote-form" action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSes5k78YDOcUx9_kkxI_FuM34IVkixfPHPvZ9GZ1DRI9Jc0nQ/formResponse" method="POST" target="_blank" id="quoteForm">
         <div class="form-group">
             <label>이사 예정일</label>
-            <input type="date" name="entry.1085189239" required>
+            <input type="date" name="entry.1085189239" id="moveDate" required>
         </div>
         <div class="form-group">
             <label>이름</label>
-            <input type="text" name="entry.1087717020" required>
+            <input type="text" name="entry.1087717020" id="name" required>
         </div>
         <div class="form-group">
             <label>연락처</label>
-            <input type="tel" name="entry.1978978553" required>
+            <input type="tel" name="entry.1978978553" id="phone" required>
         </div>
         <div class="form-group">
             <label>이메일</label>
-            <input type="email" name="entry.1874759922" required>
+            <input type="email" name="entry.1874759922" id="email" required>
         </div>
         <div class="form-group">
             <label>출발지</label>
-            <input type="text" name="entry.1730863505" required>
+            <input type="text" name="entry.1730863505" id="fromAddress" required>
         </div>
         <div class="form-group">
             <label>도착지</label>
-            <input type="text" name="entry.574223491" required>
+            <input type="text" name="entry.574223491" id="toAddress" required>
         </div>
         <div class="form-group">
             <label>평수</label>
-            <input type="number" name="entry.437259689" required>
+            <input type="number" name="entry.437259689" id="size" required>
         </div>
         <button type="submit">견적 요청하기</button>
     </form>
@@ -595,46 +595,9 @@
     </footer>
 
     <script>
-        document.getElementById('quoteForm').addEventListener('submit', async function (e) {
-            e.preventDefault();
-            console.log('Form submission started');
-
-            const formData = {
-                moveDate: document.getElementById('moveDate').value,
-                name: document.getElementById('name').value,
-                phone: document.getElementById('phone').value,
-                email: document.getElementById('email').value,
-                fromAddress: document.getElementById('fromAddress').value,
-                toAddress: document.getElementById('toAddress').value,
-                size: document.getElementById('size').value
-            };
-
-            console.log('Form data collected:', formData);
-
-            try {
-                console.log('Sending request to server...');
-                const response = await fetch('http://localhost:3000/api/submit-quote', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData)
-                });
-
-                console.log('Response received:', response);
-                const result = await response.json();
-                console.log('Response data:', result);
-
-                if (result.success) {
-                    alert('견적 신청이 완료되었습니다. 입력하신 이메일로 확인 메일이 발송되었습니다.');
-                    this.reset();
-                } else {
-                    alert(`견적 신청 중 오류가 발생했습니다: ${result.message}`);
-                }
-            } catch (error) {
-                console.error('Error details:', error);
-                alert('견적 신청 중 오류가 발생했습니다. 다시 시도해 주세요.');
-            }
+        document.getElementById('quoteForm').addEventListener('submit', function(e) {
+            // 기본 제출 동작은 그대로 두어 구글 폼으로 전송되게 함
+            console.log('Form submitted to Google Forms');
         });
 
         // 전화번호 자동 하이픈 추가
